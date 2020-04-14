@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: "postgres"
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      #- POSTGRES_HOST_AUTH_METHOD:trust
+      POSTGRES_DB: petclinic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: petclinic
+  app:
+    build: .
+    ports:
+      - "9966:9966"
+    environment:
+      DB_SERVER: db
+    depends_on:
+      - db
+    links:
+      - db
